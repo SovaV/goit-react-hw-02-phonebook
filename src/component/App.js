@@ -3,7 +3,7 @@ import Container from '../component/Container/Container';
 // import a from './app.module.css';
 //====================================
 import Contacts from '../component/Contacts/Contacts';
-// import ContactForm from './component/ContactForm/ContactForm';
+import ContactForm from './ContactForm/ContactForm';
 class App extends Component {
   state = {
     contacts: [
@@ -16,13 +16,19 @@ class App extends Component {
     name: '',
     number: '',
   };
+  deleteTodo = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
   render() {
+    const obj = this.state.contacts;
     return (
       <Container>
         <h1>Phonebook</h1>
-        {/* <ContactForm /> */}
+        <ContactForm />
         <h2>Contacts</h2>
-        <Contacts title="Contacts"></Contacts>
+        <Contacts contacts={obj} onDeleteContact={this.deleteTodo} />
       </Container>
     );
   }

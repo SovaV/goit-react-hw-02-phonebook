@@ -6,22 +6,35 @@ class ContactForm extends Component {
     name: '',
     number: '',
   };
+  hendleChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
+
+  hendleSubmit = e => {
+    e.preventDefault();
+    console.log(this.state);
+  };
   render() {
     return (
-      <div className={p.box}>
-        <div className={p.wrapp}>
+      <form className={p.box} onSubmit={this.hendleSubmit}>
+        <label className={p.wrapp}>
           <p>Name</p>
           <input
+            value={this.state.name}
+            onChange={this.hendleChange}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
           />
-        </div>
+        </label>
         <div className={p.wrapp}>
           <p>Number</p>
           <input
+            value={this.state.number}
+            onChange={this.hendleChange}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -29,8 +42,8 @@ class ContactForm extends Component {
             required
           />
         </div>
-        <button>Add contact</button>
-      </div>
+        <button type="submit">Add contact</button>
+      </form>
     );
   }
 }
