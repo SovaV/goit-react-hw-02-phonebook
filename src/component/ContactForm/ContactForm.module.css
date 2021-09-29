@@ -7,3 +7,10 @@
 .wrapp {
   margin-bottom: 10px;
 }
+.btn {
+  margin: 10px 0;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgb(236, 129, 206);
+  cursor: pointer;
+}

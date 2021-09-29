@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Container from '../component/Container/Container';
-// import a from './app.module.css';
+import shortid from 'shortid';
+
 //====================================
-import Contacts from '../component/Contacts/Contacts';
+import ContactList from './ContactList/ContactList ';
 import ContactForm from './ContactForm/ContactForm';
+import Filter from './Filter/Filter';
+
 class App extends Component {
   state = {
     contacts: [
@@ -16,19 +19,46 @@ class App extends Component {
     name: '',
     number: '',
   };
-  deleteTodo = contactId => {
+  //============================================
+  addContact = ({ name, number }) => {
+    const contact = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+
+    this.setState(({ contacts }) => ({
+      contacts: [contact, ...contacts],
+    }));
+  };
+
+  deleteContact = contactId => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
+  //============================================
+  //============================================
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+  getVisibleTodos = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(contact => contact.text.toLowerCase().includes(normalizedFilter));
+  };
+  //=================================================
   render() {
     const obj = this.state.contacts;
+
     return (
       <Container>
         <h1>Phonebook</h1>
-        <ContactForm />
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <Contacts contacts={obj} onDeleteContact={this.deleteTodo} />
+        <Filter value={this.filter} onChange={this.changeFilter} />
+        <ContactList contacts={obj} onDeleteContact={this.deleteContact} />
       </Container>
     );
   }

@@ -5,7 +5,7 @@ const Contacts = ({ contacts, onDeleteContact }) => (
     {contacts.map(({ id, name, number }) => (
       <li key={id}>
         {name}: {number}
-        <button onClick={() => onDeleteContact(id)}>
+        <button type="button" onClick={() => onDeleteContact(id)}>
           <FaTrashAlt size="20px" />
         </button>
       </li>

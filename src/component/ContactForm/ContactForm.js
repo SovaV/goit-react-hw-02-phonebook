@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import shortid from 'shortid';
 import p from './ContactForm.module.css';
 class ContactForm extends Component {
   state = {
@@ -6,6 +7,9 @@ class ContactForm extends Component {
     name: '',
     number: '',
   };
+  nameInputId = shortid.generate();
+  numberInputId = shortid.generate();
+
   hendleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
@@ -13,14 +17,20 @@ class ContactForm extends Component {
 
   hendleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.onSubmit(this.state);
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({ name: '', number: '' });
   };
   render() {
     return (
       <form className={p.box} onSubmit={this.hendleSubmit}>
-        <label className={p.wrapp}>
+        <label className={p.wrapp} htmlFor={this.nameInputId}>
           <p>Name</p>
           <input
+            id={this.nameInputId}
             value={this.state.name}
             onChange={this.hendleChange}
             type="text"
@@ -30,9 +40,10 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <div className={p.wrapp}>
+        <label className={p.wrapp} htmlFor={this.numberInputId}>
           <p>Number</p>
           <input
+            id={this.numberInputId}
             value={this.state.number}
             onChange={this.hendleChange}
             type="tel"
@@ -41,8 +52,11 @@ class ContactForm extends Component {
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
           />
-        </div>
-        <button type="submit">Add contact</button>
+        </label>
+        <br />
+        <button className={p.btn} type="submit">
+          Add contact
+        </button>
       </form>
     );
   }
