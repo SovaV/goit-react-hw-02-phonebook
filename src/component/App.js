@@ -21,15 +21,20 @@ class App extends Component {
   };
   //============================================
   addContact = ({ name, number }) => {
+    const obj = this.state.contacts;
     const contact = {
       id: shortid.generate(),
       name,
       number,
     };
-
-    this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
+    const objectContacts = obj.some(contact => contact.name.toLowerCase() === name.toLowerCase());
+    if (objectContacts) {
+      alert(`${name} is already in contacts`);
+    } else {
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
+    }
   };
 
   deleteContact = contactId => {
@@ -42,23 +47,22 @@ class App extends Component {
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
-  getVisibleTodos = () => {
+  getVisibleContacts = () => {
     const { filter, contacts } = this.state;
     const normalizedFilter = filter.toLowerCase();
 
-    return contacts.filter(contact => contact.text.toLowerCase().includes(normalizedFilter));
+    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
   };
   //=================================================
   render() {
-    const obj = this.state.contacts;
-
+    const visibleContacts = this.getVisibleContacts();
     return (
       <Container>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter value={this.filter} onChange={this.changeFilter} />
-        <ContactList contacts={obj} onDeleteContact={this.deleteContact} />
+        <ContactList contacts={visibleContacts} onDeleteContact={this.deleteContact} />
       </Container>
     );
   }
