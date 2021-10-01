@@ -8,9 +8,15 @@
 }
 .list {
   text-align: initial;
-  display: inline-block;
+  /* display: inline-block; */
 }
 .item {
   display: flex;
   justify-content: space-between;
+  border: 1px solid black;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  background-color: rgb(233, 181, 181);
+  padding: 5px;
+  margin: 10px 0;
 }
