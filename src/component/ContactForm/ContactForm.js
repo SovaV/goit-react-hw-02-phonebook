@@ -1,16 +1,11 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import shortid from 'shortid';
 import p from './ContactForm.module.css';
 
 class ContactForm extends Component {
   state = {
-    contacts: [],
     name: '',
     number: '',
   };
-  nameInputId = shortid.generate();
-  numberInputId = shortid.generate();
 
   hendleChange = e => {
     const { name, value } = e.currentTarget;
@@ -29,10 +24,9 @@ class ContactForm extends Component {
   render() {
     return (
       <form className={p.box} onSubmit={this.hendleSubmit}>
-        <label className={p.wrapp} htmlFor={this.nameInputId}>
+        <label className={p.wrapp}>
           <p>Name</p>
           <input
-            id={this.nameInputId}
             value={this.state.name}
             onChange={this.hendleChange}
             type="text"
@@ -42,10 +36,9 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <label className={p.wrapp} htmlFor={this.numberInputId}>
+        <label className={p.wrapp}>
           <p>Number</p>
           <input
-            id={this.numberInputId}
             value={this.state.number}
             onChange={this.hendleChange}
             type="tel"
@@ -63,7 +56,5 @@ class ContactForm extends Component {
     );
   }
 }
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+
 export default ContactForm;
